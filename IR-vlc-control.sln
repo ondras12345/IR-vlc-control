@@ -1,0 +1,23 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.757
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "IR-vlc-control", "IR-vlc-control\IR-vlc-control.pyproj", "{D3EE6552-5EE9-4C07-B44F-08346DBBF6BD}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D3EE6552-5EE9-4C07-B44F-08346DBBF6BD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D3EE6552-5EE9-4C07-B44F-08346DBBF6BD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {820393A6-4FF2-4554-8912-19C75EAA5DD4}
+	EndGlobalSection
+EndGlobal
