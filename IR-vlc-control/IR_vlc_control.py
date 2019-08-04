@@ -17,6 +17,8 @@ import requests
 import re
 import time
 import datetime
+import argparse
+import logging
 from builtins import input
 
 COM_PORT_DEFAULT = 'COM11'
@@ -63,12 +65,28 @@ def match_key(id):
 
 if __name__ == '__main__':
     signal.signal(signal.SIGINT, sigint_handler)
-    port = input('Enter serial port [{}]: '.format(COM_PORT_DEFAULT))
+
+    parser = argparse.ArgumentParser()
+    parser.add_argument('-C', '--COM', type=str, help='COM port the Arduino is connected to')
+    parser.add_argument('-v', '--verbose', action='store_true')
+    args = parser.parse_args()
+
+    if args.verbose:
+        logging.basicConfig(level=logging.DEBUG)
+    else:
+        logging.basicConfig(level=logging.INFO)
+
+    port = args.COM
+    if port is False:
+        port = input('Enter serial port [{}]: '.format(COM_PORT_DEFAULT))
+
     if port == '':
         port = COM_PORT_DEFAULT
-        print('Defaulting to {}'.format(COM_PORT_DEFAULT))
+        logging.info('Defaulting to {}'.format(COM_PORT_DEFAULT))
 
     ser = serial.Serial(port=port, baudrate=9600)
+
+    logging.info('Listening on port {}'.format(port))
 
     last_received_time = datetime.datetime.now()
     last_received_key_id = None
@@ -76,12 +94,12 @@ if __name__ == '__main__':
     while(True):
         if ser.in_waiting > 0:
             message = str(ser.read_until())  # wait for newline
-            print('Message got: {}'.format(message))
+            logging.debug('Message got: {}'.format(message))
 
             time_delta = datetime.datetime.now() - last_received_time
 
             id = get_key_id(message)
-            print('ID got: {}'.format(id))
+            logging.debug('ID got: {}'.format(id))
 
             if id is not None:
                 if time_delta.total_seconds() > KEY_REPEAT_TIMEOUT or (not id == last_received_key_id and time_delta.total_seconds() > (KEY_REPEAT_TIMEOUT / 5)):
