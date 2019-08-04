@@ -7,6 +7,8 @@
 # See:
 # * https://wiki.videolan.org/index.php?title=VLC_HTTP_requests
 # * https://github.com/z3t0/Arduino-IRremote
+# * https://semver.org/
+
 
 import serial
 import signal
@@ -23,11 +25,11 @@ URL = 'http://{}:{}/requests/status.xml'.format(IP, PORT)
 VLC_PASSWORD = 1234
 
 KEY_DICT = {
-    '5EA110EF': 'pl_play',
-    '5EA1906F': 'pl_pause',
-    # '5EA1906F': 'pl_stop',
-    '5EA150AF': 'pl_next',
-    '5EA1D02F': 'pl_previous',
+    'NEC: 5EA110EF': 'pl_play',
+    'NEC: 5EA1906F': 'pl_pause',
+    # 'NEC: 5EA1906F': 'pl_stop',
+    'NEC: 5EA150AF': 'pl_next',
+    'NEC: 5EA1D02F': 'pl_previous',
     }
 
 KEY_REPEAT_TIMEOUT = 2.5  # or 5 s
@@ -40,7 +42,7 @@ def sigint_handler(signum, frame):  # ctrl+c
 
 def get_key_id(message):
     try:
-        id = re.search('Decoded NEC: (.*) \(32 bits\)', message).group(1)
+        id = re.search('Decoded (.*) \(32 bits\)', message).group(1)
     except AttributeError:
         id = None
 
