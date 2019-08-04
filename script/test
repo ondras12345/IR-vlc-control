@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+#set -e
+
+cd "$(dirname "$0")/.."
+
+echo "==> Running tests…"
+
+printf "\n========== flake8 ==========\n"
+flake8 --exclude IR-vlc-control/PyVLChttp --max-line-length 120
+
+printf "\n========== bandit ==========\n"
+bandit -r . --exclude ./IR-vlc-control/PyVLChttp
