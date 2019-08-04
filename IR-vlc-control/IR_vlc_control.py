@@ -22,7 +22,7 @@ COM_PORT_DEFAULT = 'COM11'
 PORT = 8080
 IP = 'localhost'
 URL = 'http://{}:{}/requests/status.xml'.format(IP, PORT)
-VLC_PASSWORD = 1234
+VLC_PASSWORD = '1234'
 
 KEY_DICT = {
     'NEC: 5EA110EF': 'pl_play',
