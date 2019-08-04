@@ -16,13 +16,14 @@ import sys
 import requests
 import re
 import datetime
+from builtins import input
 
 COM_PORT_DEFAULT = 'COM11'
 
 PORT = 8080
 IP = 'localhost'
 URL = 'http://{}:{}/requests/status.xml'.format(IP, PORT)
-VLC_PASSWORD = '1234'
+VLC_PASSWORD = '1234'  # nosec
 
 KEY_DICT = {
     'NEC: 5EA110EF': 'pl_play',
@@ -61,7 +62,7 @@ def match_key(id):
 
 if __name__ == '__main__':
     signal.signal(signal.SIGINT, sigint_handler)
-    port = input('Enter serial port: ')
+    port = input('Enter serial port [{}]: '.format(COM_PORT_DEFAULT))
     if port == '':
         port = COM_PORT_DEFAULT
         print('Defaulting to {}'.format(COM_PORT_DEFAULT))
