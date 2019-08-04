@@ -1,0 +1,3 @@
+[submodule "IR-vlc-control/PyVLChttp"]
+	path = IR-vlc-control/PyVLChttp
+	url = https://github.com/cheydrick/PyVLChttp
