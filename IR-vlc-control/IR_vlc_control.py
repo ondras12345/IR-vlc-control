@@ -16,6 +16,7 @@ import sys
 import requests
 import re
 import datetime
+import argparse
 from builtins import input
 
 COM_PORT_DEFAULT = 'COM11'
@@ -62,12 +63,22 @@ def match_key(id):
 
 if __name__ == '__main__':
     signal.signal(signal.SIGINT, sigint_handler)
-    port = input('Enter serial port [{}]: '.format(COM_PORT_DEFAULT))
+
+    parser = argparse.ArgumentParser()
+    group = parser.add_mutually_exclusive_group()
+    group.add_argument('-C', '--COM', type=str)
+    args = parser.parse_args()
+    port = args.COM
+    if port is False:
+        port = input('Enter serial port [{}]: '.format(COM_PORT_DEFAULT))
+
     if port == '':
         port = COM_PORT_DEFAULT
         print('Defaulting to {}'.format(COM_PORT_DEFAULT))
 
     ser = serial.Serial(port=port, baudrate=9600)
+
+    print('Listening on port {}'.format(port))
 
     last_received_time = datetime.datetime.now()
     last_received_key_id = None
