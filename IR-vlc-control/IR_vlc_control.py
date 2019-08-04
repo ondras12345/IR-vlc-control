@@ -13,24 +13,25 @@
 import serial
 import signal
 import sys
-import requests
 import re
 import datetime
 from builtins import input
+from PyVLChttp.pyvlchttp import VLCHTTPAPI
 
 COM_PORT_DEFAULT = 'COM11'
 
-PORT = 8080
+PORT = '8080'
 IP = 'localhost'
-URL = 'http://{}:{}/requests/status.xml'.format(IP, PORT)
 VLC_PASSWORD = '1234'  # nosec
 
+vlc = VLCHTTPAPI(IP, PORT, VLC_PASSWORD)
+
 KEY_DICT = {
-    'NEC: 5EA110EF': 'pl_play',
-    'NEC: 5EA1906F': 'pl_pause',
-    # 'NEC: 5EA1906F': 'pl_stop',
-    'NEC: 5EA150AF': 'pl_next',
-    'NEC: 5EA1D02F': 'pl_previous',
+    'NEC: 5EA110EF': vlc.play,
+    # 'NEC: 5EA1906F': vlc.pause,
+    'NEC: 5EA1906F': vlc.stop,
+    'NEC: 5EA150AF': vlc.play_next,
+    'NEC: 5EA1D02F': vlc.play_previous,
     }
 
 KEY_REPEAT_TIMEOUT = 2.5  # or 5 s
@@ -53,8 +54,8 @@ def get_key_id(message):
 def match_key(id):
     if id in KEY_DICT:
         command = KEY_DICT[id]
-        print('Key matched: {}'.format(command))
-        requests.get(url=URL, params={'command': command}, auth=('', VLC_PASSWORD))
+        print('Key matched: {}'.format(command.__name__))
+        command()
         return True
     else:
         return False
@@ -62,6 +63,7 @@ def match_key(id):
 
 if __name__ == '__main__':
     signal.signal(signal.SIGINT, sigint_handler)
+
     port = input('Enter serial port [{}]: '.format(COM_PORT_DEFAULT))
     if port == '':
         port = COM_PORT_DEFAULT
