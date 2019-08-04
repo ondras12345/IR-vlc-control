@@ -15,6 +15,7 @@ import signal
 import sys
 import requests
 import re
+import time
 import datetime
 from builtins import input
 
@@ -88,3 +89,5 @@ if __name__ == '__main__':
 
                 last_received_time = datetime.datetime.now()
                 last_received_key_id = id
+        else:
+            time.sleep(0.2)
