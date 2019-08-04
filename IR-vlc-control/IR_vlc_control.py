@@ -66,8 +66,8 @@ if __name__ == '__main__':
     signal.signal(signal.SIGINT, sigint_handler)
 
     parser = argparse.ArgumentParser()
-    parser.add_argument('-C', '--COM', type=str)
-    parser.add_argument('-v', '--verbose', action="store_true")
+    parser.add_argument('-C', '--COM', type=str, help='COM port the Arduino is connected to')
+    parser.add_argument('-v', '--verbose', action='store_true')
     args = parser.parse_args()
 
     if args.verbose:
