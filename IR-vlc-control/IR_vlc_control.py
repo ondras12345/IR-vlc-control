@@ -36,7 +36,7 @@ KEY_DICT = {
     'NEC: 5EA1D02F': 'pl_previous',
     }
 
-KEY_REPEAT_TIMEOUT = 2.5  # or 5 s
+KEY_REPEAT_TIMEOUT = 0.5
 
 
 def sigint_handler(signum, frame):  # ctrl+c
@@ -102,7 +102,7 @@ if __name__ == '__main__':
             logging.debug('ID got: {}'.format(id))
 
             if id is not None:
-                if time_delta.total_seconds() > KEY_REPEAT_TIMEOUT or (not id == last_received_key_id and time_delta.total_seconds() > (KEY_REPEAT_TIMEOUT / 5)):
+                if time_delta.total_seconds() > KEY_REPEAT_TIMEOUT or not id == last_received_key_id:
                     match_key(id)
 
                 last_received_time = datetime.datetime.now()
