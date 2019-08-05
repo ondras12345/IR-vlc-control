@@ -15,7 +15,8 @@ This script allows you to control the VLC media player using any IR remote contr
     - You shouldn't need to change `KEY_REPEAT_TIMEOUT`.
 1. Run the script. You need to have Python interpreter installed.
 
-
+## How to exit the script
+Just press ctrl+c
 
 ## Hardware
 You need an Arduino board that is compatible with the [IRremote Arduino Library](https://github.com/z3t0/Arduino-IRremote) and an IR sensor.
