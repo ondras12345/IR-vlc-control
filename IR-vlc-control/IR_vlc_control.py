@@ -78,7 +78,7 @@ if __name__ == '__main__':
         logging.basicConfig(level=logging.INFO)
 
     port = args.COM
-    if port is False:
+    if port is False or port is None:
         port = input('Enter serial port [{}]: '.format(COM_PORT_DEFAULT))
 
     if port == '':
