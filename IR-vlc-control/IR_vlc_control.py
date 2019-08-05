@@ -72,7 +72,7 @@ def match_key(id):
         return False
 
 
-if __name__ == '__main__':
+def main():
     signal.signal(signal.SIGINT, sigint_handler)
 
     parser = argparse.ArgumentParser()
@@ -93,6 +93,7 @@ if __name__ == '__main__':
         port = COM_PORT_DEFAULT
         logging.info('Defaulting to {}'.format(COM_PORT_DEFAULT))
 
+    global ser
     ser = serial.Serial(port=port, baudrate=9600)
 
     logging.info('Listening on port {}'.format(port))
@@ -118,3 +119,7 @@ if __name__ == '__main__':
                 last_received_key_id = id
         else:
             time.sleep(0.2)
+
+
+if __name__ == '__main__':
+    main()
