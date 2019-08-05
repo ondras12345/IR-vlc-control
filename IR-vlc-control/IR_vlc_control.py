@@ -21,6 +21,14 @@ import logging
 from builtins import input
 from PyVLChttp.pyvlchttp import VLCHTTPAPI
 
+
+class KeyAction(object):
+    def __init__(self, action, name):
+        self.action = action
+        self.name = name
+
+
+# Settings:
 COM_PORT_DEFAULT = 'COM11'
 
 PORT = '8080'
@@ -30,11 +38,11 @@ VLC_PASSWORD = '1234'  # nosec
 vlc = VLCHTTPAPI(IP, PORT, VLC_PASSWORD)
 
 KEY_DICT = {
-    'NEC: 5EA110EF': vlc.play,
-    # 'NEC: 5EA1906F': vlc.pause,
-    'NEC: 5EA1906F': vlc.stop,
-    'NEC: 5EA150AF': vlc.play_next,
-    'NEC: 5EA1D02F': vlc.play_previous,
+    'NEC: 5EA110EF': KeyAction(vlc.play, 'play'),
+    # 'NEC: 5EA1906F': KeyAction(vlc.pause, 'pause'),
+    'NEC: 5EA1906F': KeyAction(vlc.stop, 'stop'),
+    'NEC: 5EA150AF': KeyAction(vlc.play_next, 'next'),
+    'NEC: 5EA1D02F': KeyAction(vlc.play_previous, 'previous'),
     }
 
 KEY_REPEAT_TIMEOUT = 0.5
@@ -57,8 +65,8 @@ def get_key_id(message):
 def match_key(id):
     if id in KEY_DICT:
         command = KEY_DICT[id]
-        print('Key matched: {}'.format(command.__name__))
-        command()
+        print('Key matched: {}'.format(command.name))
+        command.action()
         return True
     else:
         return False
