@@ -1,6 +1,8 @@
 # IR-vlc-control
 This script allows you to control the VLC media player using any IR remote control.
 
+There are probably better choices, like [LIRC](http://www.lirc.org/) (linux) or [WinLIRC](http://winlirc.sourceforge.net/) (Windows), but I wanted to create my own, simple to edit solution.
+
 ## Setup and installation
 1. Download this repository - download the latest release from the [Releases](https://github.com/ondras12345/IR-vlc-control/releases) page.
 1. Download the [IRremote Arduino Library](https://github.com/z3t0/Arduino-IRremote). Follow the steps described in their README.
