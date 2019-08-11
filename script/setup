@@ -4,6 +4,8 @@ set -e
 
 cd "$(dirname "$0")/.."
 
+git submodule init
+
 script/bootstrap
 
 echo "==> App is now ready to go!"
