@@ -1,0 +1,5 @@
+### USAGE ###
+# pip install -r requirements.txt
+pyserial
+requests
+
