@@ -46,9 +46,13 @@ KEY_DICT = {
     }
 
 KEY_REPEAT_TIMEOUT = 0.5
+LOGGING_INTERVAL = 30
 
 
 def sigint_handler(signum, frame):  # ctrl+c
+    if args.logfile:
+        args.logfile.close()
+
     ser.close()
     sys.exit(0)
 
@@ -77,7 +81,9 @@ def main():
 
     parser = argparse.ArgumentParser()
     parser.add_argument('-C', '--COM', type=str, help='COM port the Arduino is connected to')
+    parser.add_argument('-l', '--logfile', type=argparse.FileType('a', encoding='UTF-8'), help='COM port the Arduino is connected to')
     parser.add_argument('-v', '--verbose', action='store_true')
+    global args
     args = parser.parse_args()
 
     if args.verbose:
@@ -97,6 +103,11 @@ def main():
     ser = serial.Serial(port=port, baudrate=9600)
 
     logging.info('Listening on port {}'.format(port))
+
+    if args.logfile:
+        logging.info('Logging playing songs to {}'.format(str(args.logfile)))
+        last_playing = ""
+        last_log_time = datetime.datetime(2000, 1, 1, 0, 0, 0, 0)
 
     last_received_time = datetime.datetime.now()
     last_received_key_id = None
@@ -119,6 +130,26 @@ def main():
                 last_received_key_id = id
         else:
             time.sleep(0.2)
+            if args.logfile:
+                if (datetime.datetime.now() - last_log_time).total_seconds() > LOGGING_INTERVAL:
+                    try:
+                        logging.debug('Getting currently playing song')
+                        response = vlc.get_status()
+                        now_playing = response['information']['category']['meta']['now_playing']
+                        stream = response['information']['category']['meta']['filename']
+                        logging.info('Now playing: {}'.format(now_playing))
+                        if now_playing != last_playing:
+                            last_playing = now_playing
+                            logging.debug('Writing to logfile')
+                            args.logfile.write('{};{};{}\n'.format(datetime.datetime.now(), stream, last_playing))
+                            args.logfile.flush()
+                            logging.info('Logfile write complete')
+
+                    except Exception as e:
+                        logging.info('Exception in playing song logging: {}'.format(str(e)))
+
+                    finally:
+                        last_log_time = datetime.datetime.now()  # to prevent loop when an exception occurs (nothing playing, etc.)
 
 
 if __name__ == '__main__':
