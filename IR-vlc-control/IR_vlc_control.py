@@ -81,7 +81,7 @@ def main():
 
     parser = argparse.ArgumentParser()
     parser.add_argument('-C', '--COM', type=str, help='COM port the Arduino is connected to')
-    parser.add_argument('-l', '--logfile', type=argparse.FileType('a', encoding='UTF-8'), help='COM port the Arduino is connected to')
+    parser.add_argument('-l', '--logfile', type=argparse.FileType('a', encoding='UTF-8'), help='File to log playing songs into')
     parser.add_argument('-v', '--verbose', action='store_true')
     global args
     args = parser.parse_args()
