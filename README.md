@@ -3,6 +3,9 @@ This script allows you to control the VLC media player using any IR remote contr
 
 There are probably better choices, like [LIRC](http://www.lirc.org/) (linux) or [WinLIRC](http://winlirc.sourceforge.net/) (Windows), but I wanted to create my own, simple to edit solution.
 
+## Archived
+I no longer use this software. There will be no further development. Feel free to fork and continue on your own.
+
 ## Setup and installation
 1. Download this repository - download the latest release from the [Releases](https://github.com/ondras12345/IR-vlc-control/releases) page **and copy** [PyVLChttp](https://github.com/cheydrick/PyVLChttp/) repo to the `IR-vlc-control/PyVLChttp` directory,    
 **OR clone** this repository and run `script/setup`. This initialises submodules.
